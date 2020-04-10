@@ -7,13 +7,12 @@ SHUTDOWN_EVENT = 'Shutdown initiated'
 
 # prep: read in the logfile
 tmp = os.getenv("TMP", "/tmp")
-logfile = os.path.join(tmp, 'log')
+logfile = os.path.join(tmp, 'shudown.log')
 urllib.request.urlretrieve(
     'https://bites-data.s3.us-east-2.amazonaws.com/messages.log',
     logfile
 )
 
-newlog = 'shutdown.log'
 with open(logfile) as f:
     loglines = f.readlines()
 
