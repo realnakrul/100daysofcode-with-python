@@ -117,13 +117,6 @@ def game_loop(player1, player2, rolls):
         print(player1.name, ':', p1_roll.name)
         print(player2.name, ':', p2_roll.name)
         print(who_won(player1, player2, p1_roll, p2_roll))
-        '''outcome = p1_roll.can_defeat(p2_roll)
-        if outcome == 'Beat':
-            print(player1.name + ' wins')
-        elif outcome == 'Defeat':
-            print(player2.name + ' wins')
-        else:
-            print(outcome)'''
 
         count += 1
 
