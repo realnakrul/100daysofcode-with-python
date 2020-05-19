@@ -24,24 +24,42 @@ def read_csv(file):
             DATA.append(row)
 
 
-def get_regions(data):
-    result = set()
+def init_qestionare(data):
+    regions = set()
+    income = set()
     for line in data:
         if line['US Region']:
-            result.add(line['US Region'])
-    return result
+            regions.add(line['US Region'])
+        if line['How much total combined money did all members of your HOUSEHOLD earn last year?']:
+            income.add(line['How much total combined money did all members of your HOUSEHOLD earn last year?'])
+    return regions, income
 
 
-def select_region(regions):
-    print(f'Select region (1-{len(regions)}):')
-    for index, line in enumerate(regions, 1):
-        print(f'{index} {line}')
-    result = input()
-    # TODO: Fix selection to return region, not a number
-    return result
+def select_region(options_list, question):
+    options_dict = {index: line for index, line in enumerate(options_list, 1)}
+    for index in options_dict:
+        print(f'{index} {options_dict[index]}')
+    # TODO: Check result for correct input
+    print(f'Select your {question} (1-{len(options_list)}):')
+    result = int(input())
+    return options_dict[result]
+
+
+def get_dishes(data, region, income):
+    result = set()
+    for line in data:
+        if line['US Region'] == region and line['How much total combined money ' 
+                'did all members of your HOUSEHOLD earn last year?'] == income and line['What is typically ' 
+                'the main dish at your Thanksgiving dinner?']:
+            result.add(line['What is typically the main dish at your Thanksgiving dinner?'])
+    print(result)
 
 
 if __name__ == '__main__':
     raw_csv_file = init()
     read_csv(raw_csv_file)
-    select_region(get_regions(DATA))
+    regions_list, income_list = init_qestionare(DATA)
+    region = select_region(regions_list, 'region')
+    income = select_region(income_list, 'income range')
+    print('Possible options are:')
+    get_dishes(DATA, region, income)
