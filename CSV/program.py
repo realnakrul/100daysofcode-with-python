@@ -14,6 +14,7 @@ def init():
     if not os.path.exists(local_data):
         remote_data = os.path.join(BASE_URL, RAW_DATA)
         urlretrieve(remote_data, local_data)
+        #TODO: Doesn't work in Windows, something wrong with path
     return local_data
 
 
@@ -35,7 +36,7 @@ def init_qestionare(data):
     return regions, income
 
 
-def select_region(options_list, question):
+def select_option(options_list, question):
     options_dict = {index: line for index, line in enumerate(options_list, 1)}
     for index in options_dict:
         print(f'{index} {options_dict[index]}')
@@ -59,7 +60,7 @@ if __name__ == '__main__':
     raw_csv_file = init()
     read_csv(raw_csv_file)
     regions_list, income_list = init_qestionare(DATA)
-    region = select_region(regions_list, 'region')
-    income = select_region(income_list, 'income range')
+    region = select_option(regions_list, 'region')
+    income = select_option(income_list, 'income range')
     print('Possible options are:')
     get_dishes(DATA, region, income)
